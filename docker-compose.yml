@@ -2,24 +2,24 @@ version: "3.1"
 
 services:
   postgres:
-    container_name: simars-postgres
-    image: postgres:14-alpine
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    image: ${POSTGRES_IMAGE}
     environment:
-      POSTGRES_DB: simars
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     restart: always
     volumes:
-      - ./postgres_data:/var/lib/postgresql/data
+      - ${POSTGRES_VOLUME}:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - ${POSTGRES_PORT}:5432
 
   adminer:
-    container_name: simars-adminer
-    image: adminer:4.8.1
+    container_name: ${ADMINER_CONTAINER_NAME}
+    image: ${ADMINER_IMAGE}
     restart: always
     ports:
-      - 9100:9100
+      - ${ADMINER_PORT}:9100
     command:
       - 'php'
       - '-S'
@@ -27,24 +27,24 @@ services:
       - '-t'
       - '/var/www/html'
     environment:
-      ADMINER_DEFAULT_SERVER: postgres
-      ADMINER_DESIGN: dracula
+      ADMINER_DEFAULT_SERVER: ${ADMINER_DEFAULT_SERVER}
+      ADMINER_DESIGN: ${ADMINER_DESIGN}
 
   api:
-    container_name: simars-api
+    container_name: ${API_CONTAINER_NAME}
     build: .
     env_file:
-      - .env
+      - ${ENV_FILE}
     environment:
-      ENVIRONMENT: production
-      POSTGRES_HOST: postgres
+      ENVIRONMENT: ${ENVIRONMENT}
+      POSTGRES_HOST: ${POSTGRES_HOST_DOCKER}
     ports:
-      - 9000:9000
+      - ${API_PORT}:9000
     depends_on:
       - postgres
     restart: on-failure
 
 networks:
   default:
-    name: capstone-alta
-    external: true
+    name: ${NETWORK_NAME}
+    external: ${NETWORK_EXTERNAL}
