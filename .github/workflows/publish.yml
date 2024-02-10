@@ -17,8 +17,11 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
+          git clone https://github.com/wussh/hospital.git
           cd ~/hospital
-          git pull origin main
+          sudo apt-get update
+          sudo apt-get install docker.io
+          sudo chmod 777 /var/run/docker.sock
           docker network create capstone-alta
           docker-compose down
           sudo docker-compose up --build -d
