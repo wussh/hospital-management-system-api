@@ -142,3 +142,15 @@ The project follows a standard Go project structure:
 - `DELETE /users/:userID/avatar`: Delete user avatar (requires JWT token).
 - `GET /users/:userID`: Get user by ID (requires JWT token).
 - `GET /users/current`: Get currently authenticated user (requires JWT token).
+
+## Continuous Integration and Continuous Deployment (CI/CD) with GitHub Actions
+
+The repository includes CI/CD workflows using GitHub Actions. Below are the workflows defined:
+
+### CI Test (ci-test.yml)
+
+This workflow runs tests on push or pull requests made to the main branch. It ensures the code quality and functionality are maintained.
+
+### Deploy to AWS (deploy-aws.yml)
+
+This workflow triggers on push events to the main branch. It deploys the application to an AWS EC2 instance using SSH. You need to provide the necessary secrets for SSH authentication and server details.
