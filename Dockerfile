@@ -18,7 +18,7 @@ RUN go mod tidy
 
 RUN go build -a -o app ./src
 
-FROM alpine:3.15.0 AS production
+FROM alpine:3.24.1 AS production
 
 COPY --from=builder /go/src/app/app /usr/local/bin/app
 
